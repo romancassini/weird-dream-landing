@@ -8,10 +8,22 @@ const { Pool } = pkg;
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// CORS + Content-Type middleware — universal fix
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*"); // allow all origins (can lock this down later)
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Content-Type", "application/json");
+  next();
+});
+
+// Ensure req.body can be parsed (if needed in future)
+app.use(express.json());
+
 // Postgres connection
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false },  // required on Render hosted Postgres
+  ssl: { rejectUnauthorized: false }, // required for Render Postgres
 });
 
 // Ensure table exists on startup
@@ -49,7 +61,7 @@ app.post("/dream", async (req, res) => {
       [ip, today]
     );
 
-    res.json({ message: "Weird dream recorded. Thanks!" });
+    res.status(200).json({ message: "Weird dream recorded. Thanks!" });
   } catch (err) {
     console.error("❌ Error in /dream", err);
     res.status(500).json({ message: "Server error." });
@@ -74,7 +86,7 @@ app.get("/dream-stats", async (_, res) => {
       [cutoffStr]
     );
 
-    res.json(result.rows.map(r => ({
+    res.status(200).json(result.rows.map(r => ({
       date: r.date,
       count: parseInt(r.count, 10),
     })));
