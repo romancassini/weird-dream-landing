@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Weird‑Dream.com</title>
-  <!-- Font stack: prefers "Aptos Serif" if installed, otherwise falls back to standard serifs -->
+
+  <!-- Font stack: Aptos Serif if installed, else common serifs -->
   <style>
     :root {
       --accent: #7f5af0;
@@ -33,7 +34,8 @@
     }
 
     .container {
-      max-width: 600px;
+      max-width: 640px;
+      width: 100%;
     }
 
     h1 {
@@ -70,18 +72,96 @@
       transform: translateY(0);
       box-shadow: 0 4px 12px rgba(127, 90, 240, 0.35);
     }
+
+    canvas {
+      margin-top: 3rem;
+    }
+
+    #statusMsg {
+      margin-top: 1rem;
+      font-size: 0.95rem;
+    }
   </style>
+
+  <!-- Chart.js CDN for the rolling bar graph -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <div class="container">
     <h1>Weird‑Dream Tracker</h1>
     <p>
-      Ever wake up thinking, "What on earth was <em>that</em> about?"<br>
-      Help us crowd‑source humanity's nightly oddities. Click below if last
-      night’s dream was unusually vivid or just downright bizarre.
+      Ever wake up thinking, "What on earth was <em>that</em> about?"<br />
+      Help us crowd‑source humanity's nightly oddities. Click below if last night’s dream was unusually vivid—or just downright bizarre.
     </p>
-    <!-- The tracker endpoint or JS logic will hook into this button later. -->
-    <a href="#" class="cta-btn">I Had a Weird Dream</a>
+
+    <button id="dreamBtn" class="cta-btn">I Had a Weird Dream</button>
+    <p id="statusMsg"></p>
+
+    <canvas id="dreamChart" width="400" height="220"></canvas>
   </div>
+
+  <script>
+    const btn = document.getElementById("dreamBtn");
+    const statusMsg = document.getElementById("statusMsg");
+    const ctx = document.getElementById("dreamChart").getContext("2d");
+    let dreamChart;
+
+    async function fetchStats() {
+      try {
+        const res = await fetch("/dream-stats");
+        if (!res.ok) throw new Error("Network response was not ok");
+        const data = await res.json(); // [{ date: '2025-06-10', count: 3 }, ...]
+        updateChart(data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function updateChart(data) {
+      const labels = data.map((d) => d.date);
+      const counts = data.map((d) => d.count);
+
+      if (dreamChart) {
+        dreamChart.data.labels = labels;
+        dreamChart.data.datasets[0].data = counts;
+        dreamChart.update();
+        return;
+      }
+
+      dreamChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels,
+          datasets: [
+            {
+              label: "Weird Dreams per Day",
+              data: counts,
+              backgroundColor: "rgba(127, 90, 240, 0.8)",
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: { beginAtZero: true, ticks: { precision: 0 } },
+          },
+        },
+      });
+    }
+
+    async function submitDream() {
+      try {
+        const res = await fetch("/dream", { method: "POST" });
+        const data = await res.json();
+        statusMsg.textContent = data.message || "Recorded!";
+        fetchStats();
+      } catch (err) {
+        statusMsg.textContent = "Error recording dream.";
+        console.error(err);
+      }
+    }
+
+    btn.addEventListener("click", submitDream);
+    window.addEventListener("DOMContentLoaded", fetchStats);
+  </script>
 </body>
 </html>
