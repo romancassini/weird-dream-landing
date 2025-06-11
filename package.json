@@ -6,6 +6,9 @@
     "start": "node server.js"
   },
   "dependencies": {
+  "express": "^4.19.0",
+  "pg": "^8.11.1"
+}
     "express": "^4.19.0"
   }
 }
