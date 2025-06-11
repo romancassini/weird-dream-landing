@@ -5,8 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weird‑Dream.com</title>
-  <!-- Google Font → Inter -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- Font stack: prefers "Aptos Serif" if installed, otherwise falls back to standard serifs -->
   <style>
     :root {
       --accent: #7f5af0;
@@ -22,7 +21,7 @@
     }
 
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: "Aptos Serif", Georgia, "Times New Roman", serif;
       background: linear-gradient(135deg, var(--bg-grad-1) 0%, var(--bg-grad-2) 100%);
       color: var(--text-light);
       display: flex;
@@ -71,12 +70,6 @@
       transform: translateY(0);
       box-shadow: 0 4px 12px rgba(127, 90, 240, 0.35);
     }
-
-    footer {
-      margin-top: 3rem;
-      font-size: 0.85rem;
-      opacity: 0.7;
-    }
   </style>
 </head>
 <body>
@@ -87,9 +80,8 @@
       Help us crowd‑source humanity's nightly oddities. Click below if last
       night’s dream was unusually vivid or just downright bizarre.
     </p>
-    <!-- For now this points nowhere.  Replace href or add JS later when the tracker endpoint exists. -->
+    <!-- The tracker endpoint or JS logic will hook into this button later. -->
     <a href="#" class="cta-btn">I Had a Weird Dream</a>
-
   </div>
 </body>
 </html>
