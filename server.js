@@ -8,16 +8,21 @@ const { Pool } = pkg;
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// CORS + Content-Type middleware — universal fix
+// CORS middleware — safe version
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*"); // allow all origins (can lock this down later)
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  res.setHeader("Content-Type", "application/json");
+  res.header("Access-Control-Allow-Origin", "*"); // allow all origins (can restrict later)
+  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+
+  if (req.method === "OPTIONS") {
+    // Respond to preflight request
+    return res.status(204).end();
+  }
+
   next();
 });
 
-// Ensure req.body can be parsed (if needed in future)
+// Enable body parsing (safe default even if we don't use body yet)
 app.use(express.json());
 
 // Postgres connection
@@ -61,6 +66,7 @@ app.post("/dream", async (req, res) => {
       [ip, today]
     );
 
+    // Correct response — this WILL be parsed fine by your front-end
     res.status(200).json({ message: "Weird dream recorded. Thanks!" });
   } catch (err) {
     console.error("❌ Error in /dream", err);
