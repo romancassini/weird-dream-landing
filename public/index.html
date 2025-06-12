@@ -37,12 +37,6 @@
       padding: 2rem;
   }
 
-
-    .container {
-      max-width: 640px;
-      width: 100%;
-    }
-
     h1 {
       font-size: 2.60rem;
       font-weight: 800;
@@ -87,6 +81,23 @@
       margin-top: 1rem;
       font-size: 0.95rem;
     }
+    .container {
+  max-width: 640px;
+  width: 100%;
+  opacity: 0;
+  animation: fadeIn 1.2s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px); /* subtle upward motion */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
   </style>
 
   <!-- Chart.js CDN for the rolling bar graph -->
