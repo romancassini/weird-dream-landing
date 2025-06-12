@@ -161,17 +161,18 @@
       scales: {
         x: {
           ticks: {
-            color: '#cccccc', // lighter grey
+            color: '#cccccc',
             font: {
               family: '"Aptos Serif", Georgia, "Times New Roman", serif'
             },
             maxTicksLimit: 12,
             autoSkip: true,
             callback: function(value) {
-              const label = this.getLabelForValue(value);
-              return label.slice(0, 7); // "YYYY-MM"
+              const label = this.getLabelForValue(value); // "YYYY-MM-DD"
+              const date = new Date(label);
+              return date.toLocaleDateString('en-GB', { month: 'long', day: 'numeric' });
             }
-          }
+        }
         },
         y: {
           beginAtZero: true,
