@@ -74,10 +74,24 @@ app.post("/dream", async (req, res) => {
   }
 });
 
-// GET /dream-stats — return last 14 days counts
+// Caching for /dream-stats
+let cachedStats = null;
+let cacheTime = 0;
+const CACHE_DURATION_MS = 5 * 60 * 1000; // 5 minutes
+
+// GET /dream-stats — return past 365 days counts
 app.get("/dream-stats", async (_, res) => {
+  const now = Date.now();
+
+  // If we have a cached result and it's still fresh, return it
+  if (cachedStats && (now - cacheTime) < CACHE_DURATION_MS) {
+    console.log("✅ Serving cached /dream-stats");
+    return res.status(200).json(cachedStats);
+  }
+
+  // Otherwise fetch fresh data from DB — past 365 days
   const cutoff = new Date();
-  cutoff.setDate(cutoff.getDate() - 13); // today + 13 days back = 14 days
+  cutoff.setDate(cutoff.getDate() - 364); // today + 364 days back = 365 days total
   const cutoffStr = cutoff.toISOString().split("T")[0];
 
   try {
@@ -92,10 +106,18 @@ app.get("/dream-stats", async (_, res) => {
       [cutoffStr]
     );
 
-    res.status(200).json(result.rows.map(r => ({
+    const stats = result.rows.map(r => ({
       date: r.date,
       count: parseInt(r.count, 10),
-    })));
+    }));
+
+    // Update cache
+    cachedStats = stats;
+    cacheTime = now;
+
+    console.log("🔄 Fetched fresh /dream-stats from DB");
+
+    res.status(200).json(stats);
   } catch (err) {
     console.error("❌ Error in /dream-stats", err);
     res.status(500).json({ message: "Server error." });
