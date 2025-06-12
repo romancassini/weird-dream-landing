@@ -7,9 +7,7 @@
   <title>Weird-Dream.com</title>
 
   <style>
-    :root {
-      --text-light: #ffffff;
-    }
+    :root { --text-light: #ffffff; }
     * { box-sizing: border-box; margin:0; padding:0; }
     body {
       font-family: "Aptos Serif", Georgia, "Times New Roman", serif;
@@ -50,6 +48,7 @@
   </style>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/wordcloud@1.1.2/src/wordcloud2.min.js"></script>
 </head>
 <body>
   <div class="container">
@@ -67,14 +66,54 @@
     <p id="statusMsg"></p>
 
     <canvas id="dreamChart" width="400" height="160"></canvas>
+    <canvas id="wordCloudCanvas" width="400" height="200"></canvas>
   </div>
 
   <script>
     const submitBtn = document.getElementById("submitBtn");
     const keywordsBox = document.getElementById("dreamKeywords");
     const statusMsg  = document.getElementById("statusMsg");
-    const ctx        = document.getElementById("dreamChart").getContext("2d");
+    const chartCtx   = document.getElementById("dreamChart").getContext("2d");
+    const cloudCanvas = document.getElementById("wordCloudCanvas");
     let dreamChart;
+
+    const STOPWORDS = new Set(["the","and","for","with","that","this","was","last","night","a","i","to","of","in"]);
+    function getWordFreqList(texts) {
+      const freq = {};
+      texts.forEach(phrase => {
+        phrase.split(/\W+/).forEach(w => {
+          const wlc = w.toLowerCase();
+          if (wlc.length < 3 || STOPWORDS.has(wlc)) return;
+          freq[wlc] = (freq[wlc] || 0) + 1;
+        });
+      });
+      return Object.entries(freq);
+    }
+
+    async function showWordCloud(date) {
+      const ctx = cloudCanvas.getContext("2d");
+      ctx.clearRect(0, 0, cloudCanvas.width, cloudCanvas.height);
+      try {
+        const res = await fetch(`/dream-texts?date=${date}`);
+        if (!res.ok) return;
+        const texts = await res.json();
+        const list = getWordFreqList(texts);
+        if (!list.length) {
+          ctx.fillStyle = "#fff";
+          ctx.font = "16px Aptos Serif, Georgia, serif";
+          ctx.fillText("No keywords for " + new Date(date).toLocaleDateString('en-GB',{month:'long',day:'numeric'}), 10, 20);
+          return;
+        }
+        WordCloud(cloudCanvas, {
+          list,
+          gridSize: 18,
+          weightFactor: w => w * 8,
+          backgroundColor: "transparent",
+          color: "#fff",
+          fontFamily: '"Aptos Serif", Georgia, serif'
+        });
+      } catch (e) { console.error(e); }
+    }
 
     async function fetchStats() {
       try {
@@ -94,71 +133,67 @@
         dreamChart.update();
         return;
       }
-      dreamChart = new Chart(ctx, {
+      dreamChart = new Chart(chartCtx, {
         type: "bar",
-        data: {
-          labels,
-          datasets:[{
-            label: "Weird Dreams per Day",
-            data: counts,
-            backgroundColor:"rgba(175,199,239,.9)",
-            borderColor:"rgba(175,199,239,1)",
-            borderWidth:1
-          }]
+        data: { labels, datasets:[{ label: "Weird Dreams per Day", data: counts,
+          backgroundColor:"rgba(175,199,239,.9)", borderColor:"rgba(175,199,239,1)", borderWidth:1 }]
         },
         options: {
-          scales: {
-            x: { ticks:{
-              color:"#cccccc",
-              font:{family:'"Aptos Serif",Georgia,"Times New Roman",serif'},
-              maxTicksLimit:12, autoSkip:true,
-              callback(v){ 
-                const d=new Date(this.getLabelForValue(v));
-                return d.toLocaleDateString('en-GB',{month:'long',day:'numeric'});
-              }
-            }},
-            y: { beginAtZero:true, ticks:{
-              precision:0, color:"#cccccc",
-              font:{family:'"Aptos Serif",Georgia,"Times New Roman",serif'}
-            }}
+          onClick: (evt, elements) => {
+            if (!elements.length) return;
+            const idx = elements[0].index;
+            const date = dreamChart.data.labels[idx];
+            showWordCloud(date);
           },
-          plugins: { legend:{ labels:{
-            color:"#cccccc",
-            font:{family:'"Aptos Serif",Georgia,"Times New Roman",serif'}
-          } } }
+          scales: {
+            x: { ticks:{ color:"#cccccc", font:{family:'"Aptos Serif",Georgia,"Times New Roman",serif'},
+                  maxTicksLimit:12, autoSkip:true,
+                  callback(v){ const d=new Date(this.getLabelForValue(v)); return d.toLocaleDateString('en-GB',{month:'long',day:'numeric'}); }
+            }},
+            y: { beginAtZero:true, ticks:{ precision:0, color:"#cccccc", font:{family:'"Aptos Serif",Georgia,"Times New Roman",serif'} } }
+          },
+          plugins: { legend:{ labels:{ color:"#cccccc", font:{family:'"Aptos Serif",Georgia,"Times New Roman",serif'} } } }
         }
       });
     }
 
     async function submitAll() {
-      const keywords = keywordsBox.value.trim();
-      if (!keywords) {
-        statusMsg.textContent = "Please enter some keywords.";
-        return;
-      }
-      try {
-        // 1) record the dream count
-        let res = await fetch("/dream", { method:"POST" });
-        let json = await res.json();
-        if (!res.ok) {
-          statusMsg.textContent = json.message || "Error recording dream.";
-          return;
-        }
-        // 2) record the keywords
-        res = await fetch("/dream-text", {
-          method: "POST",
-          headers: {"Content-Type":"application/json"},
-          body: JSON.stringify({ dreamText: keywords })
-        });
-        json = await res.json();
-        statusMsg.textContent = json.message || "Recorded!";
-        keywordsBox.value = "";
-        fetchStats();
-      } catch (err) {
-        statusMsg.textContent = "Error submitting dream.";
-        console.error(err);
-      }
+  const keywords = keywordsBox.value.trim();
+  if (!keywords) {
+    statusMsg.textContent = "Please enter some keywords.";
+    return;
+  }
+
+  try {
+    // 1) record the dream count
+    let res = await fetch("/dream", { method: "POST" });
+    const json1 = await res.json();
+    if (!res.ok) {
+      statusMsg.textContent = json1.message || "Error recording dream.";
+      return;
     }
+
+    // 2) record the keywords
+    res = await fetch("/dream-text", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ dreamText: keywords })
+    });
+    const json2 = await res.json();
+    if (!res.ok) {
+      statusMsg.textContent = json2.message || "Error recording keywords.";
+      return;
+    }
+
+    // 3) success
+    statusMsg.textContent = json2.message || "Recorded!";
+    keywordsBox.value = "";
+    fetchStats();
+  } catch (err) {
+    statusMsg.textContent = "Error submitting dream.";
+    console.error(err);
+  }
+}
 
     submitBtn.addEventListener("click", submitAll);
     window.addEventListener("DOMContentLoaded", fetchStats);
