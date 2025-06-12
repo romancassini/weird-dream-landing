@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Weird‑Dream.com</title>
+  <title>Weird-Dream.com</title>
 
-  <!-- Font stack: Aptos Serif if installed, else common serifs -->
+  <!-- Font stack: Aptos Serif if installed, else common serifs -->
   <style>
     :root {
       --accent: #7f5af0;
@@ -91,7 +91,7 @@
     <h1>Weird Dream Frequency Monitor</h1>
     <p>
       Did you wake up thinking, "What on earth was <em>that</em> about?"<br />
-      Help us crowd‑source humanity's nightly oddities. Click below if last night’s dream was unusually vivid - or just downright bizarre.
+      Help us crowd-source humanity's nightly oddities. Click below if last night’s dream was unusually vivid—or just downright bizarre.
     </p>
 
     <button id="dreamBtn" class="cta-btn">I Had a Weird Dream</button>
@@ -118,8 +118,8 @@
     }
 
     function updateChart(data) {
-      const labels = data.map((d) => d.date);
-      const counts = data.map((d) => d.count);
+      const labels = data.map(d => d.date);
+      const counts = data.map(d => d.count);
 
       if (dreamChart) {
         dreamChart.data.labels = labels;
@@ -132,29 +132,30 @@
         type: "bar",
         data: {
           labels,
-          datasets: [
-            {
-              label: "Weird Dreams per Day",
-              data: counts,
-              backgroundColor: "rgba(127, 90, 240, 0.8)",
-            },
-          ],
+          datasets: [{
+            label: "Weird Dreams per Day",
+            data: counts,
+            backgroundColor: "rgba(127, 90, 240, 0.8)"
+          }]
         },
         options: {
           scales: {
             x: {
               ticks: {
-                maxTicksLimit: 12, // ~1 per month
+                maxTicksLimit: 12, // roughly one per month
                 autoSkip: true,
-                callback: function (value, index, values) {
+                callback: function(value) {
                   const label = this.getLabelForValue(value);
-                  return label.slice(0, 7); // show YYYY-MM for clarity
-                },
-              },
+                  return label.slice(0, 7); // "YYYY-MM"
+                }
+              }
             },
-            y: { beginAtZero: true, ticks: { precision: 0 } },
-          },
-        },
+            y: {
+              beginAtZero: true,
+              ticks: { precision: 0 }
+            }
+          }
+        }
       });
     }
 
