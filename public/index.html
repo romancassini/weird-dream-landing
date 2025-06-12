@@ -112,6 +112,23 @@
 
     <button id="dreamBtn" class="cta-btn">I had a Weird Dream</button>
     <p id="statusMsg"></p>
+    <!-- dream-keyword entry -->
+    <p style="margin-top:1.5rem; font-style:italic;">
+      Summarise your dream in a few key words:
+    </p>
+    <textarea
+    id="dreamKeywords"
+    rows="2"
+    style="width:100%; font-family:inherit; padding:0.5rem; margin-bottom:0.5rem;"
+    placeholder="e.g. flying, falling, talking cat…"
+    ></textarea>
+    <button
+    id="submitKeywordsBtn"
+    class="cta-btn"
+    style="margin-bottom:1.5rem;"
+    >
+    Submit Keywords
+    </button>
 
     <canvas id="dreamChart" width="400" height="200"></canvas>
   </div>
@@ -209,7 +226,27 @@
         console.error(err);
       }
     }
+const keywordsBox = document.getElementById("dreamKeywords");
+const keywordsBtn = document.getElementById("submitKeywordsBtn");
 
+async function submitDreamKeywords() {
+  try {
+    const res = await fetch("/dream-text", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ dreamText: keywordsBox.value })
+    });
+    const data = await res.json();
+    statusMsg.textContent = data.message || "Keywords recorded!";
+    keywordsBox.value = "";
+    fetchStats();    // refresh counts or chart if you like
+  } catch (err) {
+    statusMsg.textContent = "Error recording keywords.";
+    console.error(err);
+  }
+}
+
+keywordsBtn.addEventListener("click", submitDreamKeywords);
     btn.addEventListener("click", submitDream);
     window.addEventListener("DOMContentLoaded", fetchStats);
   </script>
