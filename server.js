@@ -4,32 +4,33 @@ import { fileURLToPath } from "url";
 import pkg from "pg";
 
 const { Pool } = pkg;
-
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// CORS middleware — safe version
+// CORS middleware
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*"); // allow all origins (can restrict later)
+  res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   res.header("Access-Control-Allow-Headers", "Content-Type");
-
-  if (req.method === "OPTIONS") {
-    // Respond to preflight request
-    return res.status(204).end();
-  }
-
+  if (req.method === "OPTIONS") return res.status(204).end();
   next();
 });
 
-// Enable body parsing (safe default even if we don't use body yet)
+// JSON body parsing
 app.use(express.json());
 
 // Postgres connection
+global.__basedir = process.cwd();
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false }, // required for Render Postgres
+  ssl: { rejectUnauthorized: false }
 });
+
+// Ensure dream_text column exists (migration)
+pool.query(
+  `ALTER TABLE submissions ADD COLUMN IF NOT EXISTS dream_text TEXT;`
+).then(() => console.log("✅ Column dream_text ensured"))
+.catch(err => console.error("⚠️ Error ensuring dream_text column:", err));
 
 // Ensure table exists on startup
 pool.query(`
@@ -39,37 +40,49 @@ pool.query(`
     date TEXT NOT NULL
   )
 `).then(() => console.log("✅ Table submissions ready"))
-  .catch(err => console.error("❌ Error creating table", err));
+.catch(err => console.error("❌ Error creating table", err));
 
-// Serve static files (front end)
+// Serve static files
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, "public")));
 
-// POST /dream — record dream
+// POST /dream — record dream count
 app.post("/dream", async (req, res) => {
   const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
   const today = new Date().toISOString().split("T")[0];
-
   try {
-    const result = await pool.query(
+    const exists = await pool.query(
       "SELECT 1 FROM submissions WHERE ip = $1 AND date = $2",
       [ip, today]
     );
-
-    if (result.rowCount > 0) {
+    if (exists.rowCount > 0) {
       return res.status(400).json({ message: "You already flagged a dream today." });
     }
-
     await pool.query(
       "INSERT INTO submissions (ip, date) VALUES ($1, $2)",
       [ip, today]
     );
-
-    // Correct response — this WILL be parsed fine by your front-end
     res.status(200).json({ message: "Weird dream recorded. Thanks!" });
   } catch (err) {
     console.error("❌ Error in /dream", err);
+    res.status(500).json({ message: "Server error." });
+  }
+});
+
+// POST /dream-text — record user keywords
+app.post("/dream-text", async (req, res) => {
+  const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+  const today = new Date().toISOString().split("T")[0];
+  const { dreamText } = req.body;
+  try {
+    await pool.query(
+      "INSERT INTO submissions (ip, date, dream_text) VALUES ($1, $2, $3)",
+      [ip, today, dreamText]
+    );
+    res.status(200).json({ message: "Keywords recorded. Thanks!" });
+  } catch (err) {
+    console.error("❌ Error in /dream-text", err);
     res.status(500).json({ message: "Server error." });
   }
 });
@@ -82,18 +95,13 @@ const CACHE_DURATION_MS = 5 * 60 * 1000; // 5 minutes
 // GET /dream-stats — return past 365 days counts
 app.get("/dream-stats", async (_, res) => {
   const now = Date.now();
-
-  // If we have a cached result and it's still fresh, return it
   if (cachedStats && (now - cacheTime) < CACHE_DURATION_MS) {
     console.log("✅ Serving cached /dream-stats");
     return res.status(200).json(cachedStats);
   }
-
-  // Otherwise fetch fresh data from DB — past 365 days
   const cutoff = new Date();
-  cutoff.setDate(cutoff.getDate() - 364); // today + 364 days back = 365 days total
+  cutoff.setDate(cutoff.getDate() - 364);
   const cutoffStr = cutoff.toISOString().split("T")[0];
-
   try {
     const result = await pool.query(
       `
@@ -105,18 +113,10 @@ app.get("/dream-stats", async (_, res) => {
       `,
       [cutoffStr]
     );
-
-    const stats = result.rows.map(r => ({
-      date: r.date,
-      count: parseInt(r.count, 10),
-    }));
-
-    // Update cache
+    const stats = result.rows.map(r => ({ date: r.date, count: parseInt(r.count, 10) }));
     cachedStats = stats;
     cacheTime = now;
-
     console.log("🔄 Fetched fresh /dream-stats from DB");
-
     res.status(200).json(stats);
   } catch (err) {
     console.error("❌ Error in /dream-stats", err);
