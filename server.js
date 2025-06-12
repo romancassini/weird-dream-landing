@@ -126,3 +126,19 @@ app.get("/dream-stats", async (_, res) => {
 
 // Start server
 app.listen(PORT, () => console.log(`🚀 Server listening on ${PORT}`));
+
+// DEBUG: fetch keywords for a given date (word cloud data)
+app.get("/dream-texts", async (req, res) => {
+  const { date } = req.query;
+  if (!date) return res.status(400).json({ error: "Missing date parameter" });
+  try {
+    const result = await pool.query(
+      `SELECT dream_text FROM submissions WHERE date = $1 AND dream_text IS NOT NULL ORDER BY id ASC`,
+      [date]
+    );
+    res.json(result.rows.map(r => r.dream_text));
+  } catch (err) {
+    console.error("❌ Error in /dream-texts", err);
+    res.status(500).json({ error: "Server error." });
+  }
+});
