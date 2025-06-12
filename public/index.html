@@ -143,24 +143,44 @@
             backgroundColor: "rgba(127, 90, 240, 0.8)"
           }]
         },
-        options: {
-          scales: {
-            x: {
-              ticks: {
-                maxTicksLimit: 12, // roughly one per month
-                autoSkip: true,
-                callback: function(value) {
-                  const label = this.getLabelForValue(value);
-                  return label.slice(0, 7); // "YYYY-MM"
-                }
-              }
-            },
-            y: {
-              beginAtZero: true,
-              ticks: { precision: 0 }
-            }
-          }
+       options: {
+  scales: {
+    x: {
+      ticks: {
+        color: '#cccccc', // lighter grey
+        font: {
+          family: '"Aptos Serif", Georgia, "Times New Roman", serif'
+        },
+        maxTicksLimit: 12,
+        autoSkip: true,
+        callback: function(value) {
+          const label = this.getLabelForValue(value);
+          return label.slice(0, 7); // "YYYY-MM"
         }
+      }
+    },
+    y: {
+      beginAtZero: true,
+      ticks: {
+        precision: 0,
+        color: '#cccccc', // lighter grey
+        font: {
+          family: '"Aptos Serif", Georgia, "Times New Roman", serif'
+        }
+      }
+    }
+  },
+  plugins: {
+    legend: {
+      labels: {
+        color: '#cccccc', // lighter grey for legend text
+        font: {
+          family: '"Aptos Serif", Georgia, "Times New Roman", serif'
+        }
+      }
+    }
+  }
+}
       });
     }
 
