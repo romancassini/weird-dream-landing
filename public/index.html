@@ -6,248 +6,161 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Weird-Dream.com</title>
 
-  <!-- Font stack: Aptos Serif if installed, else common serifs -->
   <style>
     :root {
-      --accent: #7f5af0;
-      --bg-grad-1: #0d0b1d;
-      --bg-grad-2: #191633;
       --text-light: #ffffff;
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-  body {
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body {
       font-family: "Aptos Serif", Georgia, "Times New Roman", serif;
-      /* Replace gradient with your image: */
-      background: url('/dream.jpg') center center / cover no-repeat;
-      /* you can still add a subtle overlay if you like: */
-      /* background-color: rgba(13, 11, 29, 0.6);
-     background-blend-mode: overlay; */
+      background: url('/dream.jpg') center/cover no-repeat;
       color: var(--text-light);
-      display: flex;
-      min-height: 100vh;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2rem;
-  }
-
-    h1 {
-      font-size: 2.60rem;
-      font-weight: 800;
-      margin-bottom: 1rem;
-      line-height: 1.2;
-    }
-
-    p {
-      font-size: 1.125rem;
-      margin-bottom: 2rem;
-    }
-
-    .cta-btn {
-      background: rgb(175, 199, 239);
-      border: none;
-      color: #fff;
-      font-family: "Aptos Serif", Georgia, "Times New Roman", serif;
-      padding: 0.9rem 2.2rem;
-      font-size: 1rem;
-      font-weight: 600;
-      border-radius: 2rem;
-      cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-      box-shadow: 0 6px 20px rgba(175, 199, 239, 0.4);
-      }
-
-    .cta-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 24px rgba(175, 199, 239, 0.6);
-      }
-
-    .cta-btn:active {
-      transform: translateY(0);
-      box-shadow: 0 4px 12px rgba(175, 199, 239, 0.35);
-      }
-
-    canvas {
-      margin-top: 3rem;
-    }
-
-    #statusMsg {
-      margin-top: 1rem;
-      font-size: 0.95rem;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; min-height: 100vh; padding: 2rem;
     }
     .container {
-  max-width: 640px;
-  width: 100%;
-  opacity: 0;
-  animation: fadeIn 1.2s ease-out forwards;
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(10px); /* subtle upward motion */
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+      max-width: 640px; width:100%;
+      opacity: 0; animation: fadeIn 1.2s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity:0; transform: translateY(10px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+    .cta-btn {
+      background: rgb(175,199,239);
+      color: #fff;
+      font-family: inherit;
+      padding: .9rem 2.2rem;
+      border: none; border-radius: 2rem;
+      cursor: pointer;
+      transition: transform .15s ease, box-shadow .15s ease;
+      box-shadow: 0 6px 20px rgba(175,199,239,.4);
+    }
+    .cta-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 24px rgba(175,199,239,.6);
+    }
+    .cta-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 12px rgba(175,199,239,.35);
+    }
+    textarea { width:100%; font-family:inherit; padding:.5rem; margin-bottom:.5rem; }
+    canvas { margin-top: 3rem; }
+    #statusMsg { margin-top:1rem; font-size:.95rem; }
   </style>
 
-  <!-- Chart.js CDN for the rolling bar graph -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <div class="container">
-    <img src="/DreamLogo1.png" alt="Weird Dream Logo" style="max-width: 60%; height: auto; margin-bottom: 1rem;" />
-    <p>
-      Click below if your dream last night was unusually vivid or weird.
-    </p>
+    <img src="/DreamLogo1.png" alt="Weird Dream Logo"
+         style="max-width:60%;height:auto;margin-bottom:1rem;" />
+    <p>Click below if your dream last night was unusually vivid or weird.</p>
 
-    <button id="dreamBtn" class="cta-btn">I had a Weird Dream</button>
-    <p id="statusMsg"></p>
-    <!-- dream-keyword entry -->
-    <p style="margin-top:1.5rem; font-style:italic;">
+    <p style="margin-top:1.5rem;font-style:italic;">
       Summarise your dream in a few key words:
     </p>
-    <textarea
-    id="dreamKeywords"
-    rows="2"
-    style="width:100%; font-family:inherit; padding:0.5rem; margin-bottom:0.5rem;"
-    placeholder="e.g. flying, falling, talking cat…"
-    ></textarea>
-    <button
-    id="submitKeywordsBtn"
-    class="cta-btn"
-    style="margin-bottom:1.5rem;"
-    >
-    Submit Keywords
-    </button>
+    <textarea id="dreamKeywords" rows="2"
+      placeholder="e.g. flying, falling, talking cat…"></textarea>
 
-    <canvas id="dreamChart" width="400" height="200"></canvas>
+    <button id="submitBtn" class="cta-btn">Submit Dream & Keywords</button>
+    <p id="statusMsg"></p>
+
+    <canvas id="dreamChart" width="400" height="160"></canvas>
   </div>
 
   <script>
-    const btn = document.getElementById("dreamBtn");
-    const statusMsg = document.getElementById("statusMsg");
-    const ctx = document.getElementById("dreamChart").getContext("2d");
+    const submitBtn = document.getElementById("submitBtn");
+    const keywordsBox = document.getElementById("dreamKeywords");
+    const statusMsg  = document.getElementById("statusMsg");
+    const ctx        = document.getElementById("dreamChart").getContext("2d");
     let dreamChart;
 
     async function fetchStats() {
       try {
         const res = await fetch("/dream-stats");
-        if (!res.ok) throw new Error("Network response was not ok");
-        const data = await res.json(); // [{ date: '2025-06-10', count: 3 }, ...]
-        updateChart(data);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-   function updateChart(data) {
-  const labels = data.map(d => d.date);
-  const counts = data.map(d => d.count);
-
-  if (dreamChart) {
-    dreamChart.data.labels = labels;
-    dreamChart.data.datasets[0].data = counts;
-    dreamChart.update();
-    return;
-  }
-
-  dreamChart = new Chart(ctx, {
-    type: "bar",
-    data: {
-      labels,
-      datasets: [{
-        label: "Weird Dreams per Day",
-        data: counts,
-        backgroundColor: "rgba(175, 199, 239, 0.9)", // new colour with transparency
-        borderColor: "rgba(175, 199, 239, 1)", // subtle border for depth
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        x: {
-          ticks: {
-            color: '#cccccc',
-            font: {
-              family: '"Aptos Serif", Georgia, "Times New Roman", serif'
-            },
-            maxTicksLimit: 12,
-            autoSkip: true,
-            callback: function(value) {
-              const label = this.getLabelForValue(value); // "YYYY-MM-DD"
-              const date = new Date(label);
-              return date.toLocaleDateString('en-GB', { month: 'long', day: 'numeric' });
-            }
-        }
-        },
-        y: {
-          beginAtZero: true,
-          ticks: {
-            precision: 0,
-            color: '#cccccc', // lighter grey
-            font: {
-              family: '"Aptos Serif", Georgia, "Times New Roman", serif'
-            }
-          }
-        }
-      },
-      plugins: {
-        legend: {
-          labels: {
-            color: '#cccccc', // lighter grey for legend text
-            font: {
-              family: '"Aptos Serif", Georgia, "Times New Roman", serif'
-            }
-          }
-        }
-      }
-    }
-  });
-}
-
-    async function submitDream() {
-      try {
-        const res = await fetch("/dream", { method: "POST" });
+        if (!res.ok) throw new Error();
         const data = await res.json();
-        statusMsg.textContent = data.message || "Recorded!";
+        updateChart(data);
+      } catch (e) { console.error(e); }
+    }
+
+    function updateChart(data) {
+      const labels = data.map(d=>d.date);
+      const counts = data.map(d=>d.count);
+      if (dreamChart) {
+        dreamChart.data.labels   = labels;
+        dreamChart.data.datasets[0].data = counts;
+        dreamChart.update();
+        return;
+      }
+      dreamChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels,
+          datasets:[{
+            label: "Weird Dreams per Day",
+            data: counts,
+            backgroundColor:"rgba(175,199,239,.9)",
+            borderColor:"rgba(175,199,239,1)",
+            borderWidth:1
+          }]
+        },
+        options: {
+          scales: {
+            x: { ticks:{
+              color:"#cccccc",
+              font:{family:'"Aptos Serif",Georgia,"Times New Roman",serif'},
+              maxTicksLimit:12, autoSkip:true,
+              callback(v){ 
+                const d=new Date(this.getLabelForValue(v));
+                return d.toLocaleDateString('en-GB',{month:'long',day:'numeric'});
+              }
+            }},
+            y: { beginAtZero:true, ticks:{
+              precision:0, color:"#cccccc",
+              font:{family:'"Aptos Serif",Georgia,"Times New Roman",serif'}
+            }}
+          },
+          plugins: { legend:{ labels:{
+            color:"#cccccc",
+            font:{family:'"Aptos Serif",Georgia,"Times New Roman",serif'}
+          } } }
+        }
+      });
+    }
+
+    async function submitAll() {
+      const keywords = keywordsBox.value.trim();
+      if (!keywords) {
+        statusMsg.textContent = "Please enter some keywords.";
+        return;
+      }
+      try {
+        // 1) record the dream count
+        let res = await fetch("/dream", { method:"POST" });
+        let json = await res.json();
+        if (!res.ok) {
+          statusMsg.textContent = json.message || "Error recording dream.";
+          return;
+        }
+        // 2) record the keywords
+        res = await fetch("/dream-text", {
+          method: "POST",
+          headers: {"Content-Type":"application/json"},
+          body: JSON.stringify({ dreamText: keywords })
+        });
+        json = await res.json();
+        statusMsg.textContent = json.message || "Recorded!";
+        keywordsBox.value = "";
         fetchStats();
       } catch (err) {
-        statusMsg.textContent = "Error recording dream.";
+        statusMsg.textContent = "Error submitting dream.";
         console.error(err);
       }
     }
-const keywordsBox = document.getElementById("dreamKeywords");
-const keywordsBtn = document.getElementById("submitKeywordsBtn");
 
-async function submitDreamKeywords() {
-  try {
-    const res = await fetch("/dream-text", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ dreamText: keywordsBox.value })
-    });
-    const data = await res.json();
-    statusMsg.textContent = data.message || "Keywords recorded!";
-    keywordsBox.value = "";
-    fetchStats();    // refresh counts or chart if you like
-  } catch (err) {
-    statusMsg.textContent = "Error recording keywords.";
-    console.error(err);
-  }
-}
-
-keywordsBtn.addEventListener("click", submitDreamKeywords);
-    btn.addEventListener("click", submitDream);
+    submitBtn.addEventListener("click", submitAll);
     window.addEventListener("DOMContentLoaded", fetchStats);
   </script>
 </body>
