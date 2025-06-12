@@ -142,6 +142,16 @@
         },
         options: {
           scales: {
+            x: {
+              ticks: {
+                maxTicksLimit: 12, // ~1 per month
+                autoSkip: true,
+                callback: function (value, index, values) {
+                  const label = this.getLabelForValue(value);
+                  return label.slice(0, 7); // show YYYY-MM for clarity
+                },
+              },
+            },
             y: { beginAtZero: true, ticks: { precision: 0 } },
           },
         },
