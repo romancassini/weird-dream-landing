@@ -21,9 +21,13 @@
       padding: 0;
     }
 
-    body {
+  body {
       font-family: "Aptos Serif", Georgia, "Times New Roman", serif;
-      background: linear-gradient(135deg, var(--bg-grad-1) 0%, var(--bg-grad-2) 100%);
+      /* Replace gradient with your image: */
+      background: url('/dream.jpg') center center / cover no-repeat;
+      /* you can still add a subtle overlay if you like: */
+      /* background-color: rgba(13, 11, 29, 0.6);
+     background-blend-mode: overlay; */
       color: var(--text-light);
       display: flex;
       min-height: 100vh;
@@ -31,7 +35,8 @@
       justify-content: center;
       text-align: center;
       padding: 2rem;
-    }
+  }
+
 
     .container {
       max-width: 640px;
