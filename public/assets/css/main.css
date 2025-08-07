@@ -835,15 +835,16 @@ section,
   display: inline-block;
   padding: 12px 40px;
   border-radius: 4px;
-  transition: 0.3s ease;
   text-transform: uppercase;
   letter-spacing: 1px;
   border: none;
+  transition: background 1.5s ease-in-out, box-shadow 1.5s ease-in-out;
 }
 
 .hero .btn-get-started:hover {
   background: linear-gradient(to right, #FF5F6D, #FFC371); /* warm pink > golden peach */
   color: var(--contrast-color);
+  box-shadow: 0 0 10px rgba(255, 95, 109, 0.4);
 }
 
 /*--------------------------------------------------------------
