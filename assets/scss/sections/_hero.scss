@@ -1,0 +1,65 @@
+// main: ../main.scss
+/*--------------------------------------------------------------
+# Hero Section
+--------------------------------------------------------------*/
+.hero {
+  width: 100%;
+  min-height: 30vh;
+  position: relative;
+  padding: 120px 0 60px 0;
+  display: flex;
+  align-items: center;
+
+  h2 {
+    margin: 0 0 10px 0;
+    font-size: 38px;
+    font-weight: 700;
+
+    .underlight {
+      position: relative;
+      z-index: 1;
+      padding: 0 5px;
+      display: inline-block;
+
+      &:before {
+        content: "";
+        position: absolute;
+        height: 50%;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: var(--accent-color);
+        z-index: -1;
+      }
+    }
+  }
+
+  p {
+    color: color-mix(in srgb, var(--default-color), transparent 30%);
+    margin-bottom: 30px;
+    font-size: 18px;
+  }
+
+  @media (max-width: 768px) {
+    h2 {
+      font-size: 32px;
+    }
+  }
+
+  .btn-get-started {
+    color: var(--contrast-color);
+    background: var(--accent-color);
+    font-weight: 400;
+    font-size: 14px;
+    display: inline-block;
+    padding: 12px 40px;
+    border-radius: 4px;
+    transition: 0.5s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    &:hover {
+      background-color: color-mix(in srgb, var(--accent-color) 90%, white 10%);
+    }
+  }
+}
