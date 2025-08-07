@@ -806,7 +806,12 @@ section,
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(to top, #ff5f6d 0%, #ffc371 50%, transparent 100%);
+  background: linear-gradient(
+    to top,
+    rgba(255, 95, 109, 0.5) 0%,
+    rgba(255, 195, 113, 0.5) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
   z-index: -1;
 }
 
