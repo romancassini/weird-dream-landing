@@ -1398,3 +1398,11 @@ section,
 .starter-section {
   /* Add your styles here */
 }
+/*--------------------------------------------------------------
+# Custom Styles
+--------------------------------------------------------------*/
+.portrait-artwork img {
+  object-fit: contain;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+}
