@@ -49,7 +49,10 @@ pool.query(`
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, "public")));
-
+// Serve dream logger at /tracker
+app.get('/tracker', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'tracker.html'));
+});
 // In-memory cache for /dream-stats
 let cachedStats = null;
 let cacheTime = 0;
