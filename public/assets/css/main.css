@@ -1406,3 +1406,50 @@ section,
   width: 100%;
   aspect-ratio: 3 / 4;
 }
+/*--------------------------------------------------------------
+# Masonry-style Gallery
+--------------------------------------------------------------*/
+.masonry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;            /* wide margins left & right */
+  padding: 0 1rem;           /* small gutter to page edge */
+}
+
+.masonry-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #111;          /* adjust to match your page bg */
+}
+
+.masonry-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.masonry-item .preview-link {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  font-size: 1.5rem;
+}
+
+.masonry-item:hover .preview-link {
+  opacity: 1;
+}
+
+/* Optional: better portrait handling */
+.portrait-artwork img {
+  aspect-ratio: 3/4;
+}
