@@ -952,12 +952,12 @@ section,
 }
 
 /* Centre your “maximize” icon on hover */
+/* Centre your “maximize” icon on hover */
 .masonry-item .preview-link {
+  position: absolute !important;       /* ← add this */
   inset: auto !important;
   top: 50% !important;
   left: 50% !important;
-  bottom: auto !important;
-  right: auto !important;
   transform: translate(-50%, -50%) !important;
 
   width: 48px;
