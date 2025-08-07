@@ -1409,47 +1409,36 @@ section,
 /*--------------------------------------------------------------
 # Masonry-style Gallery
 --------------------------------------------------------------*/
+/* Masonry-style Gallery via CSS Columns */
 .masonry-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 2rem;
+  column-count: 3;
+  column-gap: 2rem;
   max-width: 1200px;
-  margin: 0 auto;            /* wide margins left & right */
-  padding: 0 1rem;           /* small gutter to page edge */
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .masonry-item {
-  position: relative;
-  overflow: hidden;
-  border-radius: 8px;
-  background: #111;          /* adjust to match your page bg */
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 2rem;
 }
 
 .masonry-item img {
   width: 100%;
   height: auto;
   display: block;
-  object-fit: cover;
+  border-radius: 8px;
 }
 
-.masonry-item .preview-link {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  background: rgba(0, 0, 0, 0.25);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  font-size: 1.5rem;
+@media (max-width: 1200px) {
+  .masonry-grid {
+    column-count: 2;
+  }
 }
 
-.masonry-item:hover .preview-link {
-  opacity: 1;
-}
-
-/* Optional: better portrait handling */
-.portrait-artwork img {
-  aspect-ratio: 3/4;
+@media (max-width: 768px) {
+  .masonry-grid {
+    column-count: 1;
+  }
 }
