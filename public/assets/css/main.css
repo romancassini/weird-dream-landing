@@ -604,7 +604,7 @@ h6 {
 
 @keyframes preloaderfinish {
   0% {
-    width: 5 0%;
+    width: 50%;
   }
 
   100% {
@@ -850,6 +850,9 @@ section,
 /*--------------------------------------------------------------
 # Gallery Section
 --------------------------------------------------------------*/
+/*--------------------------------------------------------------
+# Gallery Section (centered, on-hover icon inside image)
+--------------------------------------------------------------*/
 .gallery .gallery-item {
   position: relative;
   overflow: hidden;
@@ -857,48 +860,34 @@ section,
 }
 
 .gallery .gallery-item img {
-  transition: 0.3s;
-}
-
-.gallery .gallery-links {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: all ease-in-out 0.3s;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 3;
-}
-
-.gallery .gallery-links .preview-link,
-.gallery .gallery-links .details-link {
-  font-size: 20px;
-  color: rgba(255, 255, 255, 0.5);
-  transition: 0.3s;
-  line-height: 1.2;
-  margin: 30px 8px 0 8px;
-}
-
-.gallery .gallery-links .preview-link:hover,
-.gallery .gallery-links .details-link:hover {
-  color: #ffffff;
-}
-
-.gallery .gallery-links .details-link {
-  font-size: 30px;
-  line-height: 0;
-}
-
-.gallery .gallery-item:hover .gallery-links {
-  opacity: 1;
-}
-
-.gallery .gallery-item:hover .preview-link,
-.gallery .gallery-item:hover .details-link {
-  margin-top: 0;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 0.3s ease;
 }
 
 .gallery .gallery-item:hover img {
   transform: scale(1.1);
+}
+
+/* overlay link covering the entire image */
+.gallery .gallery-item .preview-link {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.25);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  color: #fff;
+  font-size: 2rem;
+  text-decoration: none;
+}
+
+/* fade the overlay/icon in on hover */
+.gallery .gallery-item:hover .preview-link {
+  opacity: 1;
 }
 
 .glightbox-clean .gslide-description {
