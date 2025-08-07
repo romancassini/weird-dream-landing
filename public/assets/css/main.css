@@ -802,11 +802,11 @@ section,
 .hero h2 .underlight:before {
   content: "";
   position: absolute;
-  height: 50%;
+  height: 60%;
   bottom: 0;
   left: 0;
   right: 0;
-  background: var(--accent-color);
+  background: linear-gradient(to top, #ff5f6d 0%, #ffc371 50%, transparent 100%);
   z-index: -1;
 }
 
