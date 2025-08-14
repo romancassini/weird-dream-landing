@@ -40,11 +40,11 @@
 
 /* Color Presets */
 .light-background {
-  --background-color: #1a1a1a;
+  --background-color: #35024A;
   --surface-color: #343434;
 }
 .dark-background {
-  --background-color: #060606;
+  --background-color: #35024A;
   --default-color: #ffffff;
   --heading-color: #ffffff;
   --surface-color: #252525;
