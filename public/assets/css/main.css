@@ -980,3 +980,23 @@ section,
   opacity: 1 !important;
   pointer-events: auto !important;
 }
+/* Force all dropdown menus to expand vertically */
+.navmenu .dropdown ul {
+  position: static;          /* remove absolute positioning */
+  display: none;              /* hide by default */
+  margin: 0;
+  padding: 0;
+}
+
+.navmenu .dropdown:hover > ul {
+  display: block;             /* show on hover */
+}
+
+.navmenu .dropdown ul li {
+  position: static;
+}
+
+.navmenu .dropdown ul ul {
+  left: auto;                 /* disable horizontal offset */
+  top: auto;
+}
