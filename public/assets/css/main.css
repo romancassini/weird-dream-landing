@@ -19,7 +19,7 @@
   --nav-font: "Inter", sans-serif;
 
   /* Global Colors */
-  --background-color: #35024A;
+  --background-color: #16012D;
   --default-color: #fafafa;
   --heading-color: #ffffff;
   --accent-color: #27a776;
@@ -40,11 +40,11 @@
 
 /* Color Presets */
 .light-background {
-  --background-color: #35024A;
+  --background-color: #16012D;
   --surface-color: #343434;
 }
 .dark-background {
-  --background-color: #35024A;
+  --background-color: #16012D;
   --default-color: #ffffff;
   --heading-color: #ffffff;
   --surface-color: #252525;
