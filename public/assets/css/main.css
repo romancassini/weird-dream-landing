@@ -606,8 +606,8 @@ section,
   transition: background 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 .hero .btn-get-started:hover {
-  background-color: color-mix(in srgb, var(--accent-color) 90%, white 10%);
-  box-shadow: 0 0 10px rgba(0,0,0,0.15); /* subtle lift on hover */
+  background-color: color-mix(in srgb, var(--accent-color) 85%, white 15%);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
 /*--------------------------------------------------------------
