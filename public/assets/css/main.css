@@ -79,7 +79,7 @@ h1, h2, h3, h4, h5, h6 {
 .php-email-form .sent-message,
 .php-email-form .loading {
   display: none;
-  text-align: centre;
+  text-align: center;
   padding: 15px;
   margin-bottom: 24px;
   font-weight: 600;
@@ -300,8 +300,8 @@ h1, h2, h3, h4, h5, h6 {
     width: 30px;
     height: 30px;
     display: flex;
-    align-items: centre;
-    justify-content: centre;
+    align-items: center;
+    justify-content: center;
     border-radius: 50%;
     background-color: color-mix(in srgb, var(--accent-color), transparent 90%);
     transition: 0.3s;
@@ -373,7 +373,7 @@ h1, h2, h3, h4, h5, h6 {
 .footer .copyright p { margin: 0; }
 .footer .social-links { margin-top: 20px; }
 .footer .social-links a {
-  display: flex; align-items: centre; justify-content: centre;
+  display: flex; align-items: center; justify-content: center;
   width: 40px; height: 40px; border-radius: 50%;
   border: 1px solid color-mix(in srgb, var(--default-color), transparent 50%);
   font-size: 16px;
@@ -382,7 +382,7 @@ h1, h2, h3, h4, h5, h6 {
   transition: 0.3s;
 }
 .footer .social-links a:hover { color: var(--accent-color); border-color: var(--accent-color); }
-.footer .credits { margin-top: 10px; font-size: 13px; text-align: centre; }
+.footer .credits { margin-top: 10px; font-size: 13px; text-align: center; }
 
 /*--------------------------------------------------------------
 # Preloader
@@ -574,7 +574,7 @@ section,
   position: relative;
   padding: 120px 0 60px;
   display: flex;
-  align-items: centre;
+  align-items: center;
 }
 .hero h2 { margin-bottom: 10px; font-size: 38px; font-weight: 700; }
 .hero h2 .underlight {
@@ -618,7 +618,7 @@ section,
 .about .content ul li {
   margin-bottom: 20px;
   display: flex;
-  align-items: centre;
+  align-items: center;
 }
 .about .content ul strong { margin-right: 10px; }
 .about .content ul i {
@@ -636,7 +636,7 @@ section,
   min-height: 320px;
   display: flex;
   flex-direction: column;
-  text-align: centre;
+  text-align: center;
   transition: 0.3s;
 }
 .testimonials .stars { margin-bottom: 15px; }
@@ -682,7 +682,7 @@ section,
   background-color: rgba(0,0,0,0.15);
   font-size: 24px;
   border-radius: 50%;
-  display: flex; align-items: centre; justify-content: centre;
+  display: flex; align-items: center; justify-content: center;
   transition: 0.3s;
 }
 .gallery-details .swiper-button-prev:hover:after,
@@ -773,7 +773,7 @@ section,
   background-color: var(--accent-color);
   font-size: 24px;
   width: 56px; height: 56px;
-  display: flex; align-items: centre; justify-content: centre;
+  display: flex; align-items: center; justify-content: center;
   border-radius: 50%;
   transition: 0.3s ease-in-out;
 }
@@ -805,7 +805,7 @@ section,
 .contact .info-wrap { margin-bottom: 30px; }
 .contact .info-item i {
   font-size: 20px; color: var(--accent-color);
-  width: 56px; height: 56px; display: flex; align-items: centre; justify-content: centre;
+  width: 56px; height: 56px; display: flex; align-items: center; justify-content: center;
   transition: all 0.3s ease-in-out; border-radius: 50%;
   border: 1px solid color-mix(in srgb, var(--accent-color), transparent 40%);
   margin-right: 15px;
@@ -869,7 +869,7 @@ section,
 }
 .masonry-item:hover img { transform: scale(1.1); }
 
-/* Centre the “maximise” icon on hover */
+/* Center the “maximise” icon on hover */
 .masonry-item .preview-link {
   position: absolute !important;
   inset: auto !important;
@@ -880,7 +880,7 @@ section,
   width: 48px; height: 48px;
   background: rgba(0, 0, 0, 0.6);
   border-radius: 50%;
-  display: flex; align-items: centre; justify-content: centre;
+  display: flex; align-items: center; justify-content: center;
   font-size: 1.5rem; color: #fff !important; text-decoration: none;
 
   opacity: 0; transition: opacity 0.3s ease;
