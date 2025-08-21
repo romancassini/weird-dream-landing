@@ -22,7 +22,7 @@
   --background-color: #16012D;
   --default-color: #fafafa;
   --heading-color: #ffffff;
-  --accent-color: #27a776;
+  --accent-color: #FF8A6F;
   --surface-color: #1a1a1a;
   --contrast-color: #ffffff;
 
@@ -597,17 +597,17 @@ section,
 }
 @media (max-width: 768px) { .hero h2 { font-size: 32px; } }
 .hero .btn-get-started {
+  background-color: var(--accent-color);
   color: var(--contrast-color);
-  background-color: #b23c5a;
   padding: 12px 40px;
   border-radius: 4px;
   text-transform: uppercase;
   letter-spacing: 1px;
-  transition: background 1.5s ease-in-out, box-shadow 1.5s ease-in-out;
+  transition: background 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 .hero .btn-get-started:hover {
-  background: linear-gradient(to right, #FF5F6D, #FFC371);
-  box-shadow: 0 0 10px rgba(255,95,109,0.4);
+  background-color: color-mix(in srgb, var(--accent-color) 90%, white 10%);
+  box-shadow: 0 0 10px rgba(0,0,0,0.15); /* subtle lift on hover */
 }
 
 /*--------------------------------------------------------------
