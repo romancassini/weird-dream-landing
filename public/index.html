@@ -1,213 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Weird Dream</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
-
-  <!-- Favicons -->
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <title>Weird Dream — Roman Cassini</title>
+  <meta name="description" content="Paintings and photographs by Roman Cassini. Complexity, perspective, quality, and subjective experience.">
   <link href="assets/img/DreamLogo2.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Cardo:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Cardo:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
-  <!-- Vendor CSS Files -->
+  <!-- Vendor CSS -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-  <!-- Main CSS File -->
+  <!-- Main CSS -->
   <link href="assets/css/main.css" rel="stylesheet">
-
+  <style>
+    /* Minimal overrides to suit single-page */
+    body.index-page .header { box-shadow: none; }
+    .logo img { height: 52px; margin-right: 10px; }
+    .hero h2 { font-weight: 700; }
+    .btn-commission { padding: .8rem 1.2rem; font-weight: 600; }
+    .masonry-grid { column-count: 3; column-gap: 1rem; }
+    .masonry-item { break-inside: avoid; margin-bottom: 1rem; position: relative; }
+    .masonry-item img { width: 100%; height: auto; display: block; border-radius: .5rem; }
+    .preview-link { position:absolute; right:.6rem; bottom:.6rem; font-size:1.2rem; color:#fff; }
+    @media (max-width: 992px){ .masonry-grid{ column-count:2; } }
+    @media (max-width: 576px){ .masonry-grid{ column-count:1; } }
+    footer .social-links a { margin: 0 .4rem; }
+  </style>
 </head>
-
 <body class="index-page">
 
   <header id="header" class="header d-flex align-items-center sticky-top">
-    <div class="container-fluid position-relative d-flex align-items-center justify-content-between">
+    <div class="container d-flex align-items-center justify-content-between">
+      <a href="/" class="logo d-flex align-items-center">
+        <img src="assets/img/DreamLogo2.png" alt="Weird Dream logo">
+        <h1 class="sitename m-0">Weird Dream</h1>
+      </a>
 
-<a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
-  <img src="assets/img/DreamLogo2.png" alt="Weird Dream Logo" style="height: 52px; margin-right: 10px;">
-  <h1 class="sitename">Weird Dream</h1>
-</a>
-
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="index.html" class="active">Home<br></a></li>
-          <li><a href="about.html">About</a></li>
-          <li class="dropdown"><a href="gallery.html"><span>Gallery</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <li><a href="gallery.html">Nature</a></li>
-              <li><a href="gallery.html">People</a></li>
-              <li><a href="gallery.html">Architecture</a></li>
-              <li><a href="gallery.html">Animals</a></li>
-              <li><a href="gallery.html">Sports</a></li>
-              <li><a href="gallery.html">Travel</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                <ul>
-                  <li><a href="#">Deep Dropdown 1</a></li>
-                  <li><a href="#">Deep Dropdown 2</a></li>
-                  <li><a href="#">Deep Dropdown 3</a></li>
-                  <li><a href="#">Deep Dropdown 4</a></li>
-                  <li><a href="#">Deep Dropdown 5</a></li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-
+      <!-- Social only. No nav. -->
       <div class="header-social-links">
-        <a href="https://www.instagram.com/roman.cassini.art" class="instagram"><i class="bi bi-instagram"></i></a>
-        <a href="https://www.linkedin.com/in/roman-cassini-160499192" class="linkedin"><i class="bi bi-linkedin"></i></a>
+        <a href="https://www.instagram.com/roman.cassini.art" class="instagram" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+        <a href="https://www.linkedin.com/in/roman-cassini-160499192" class="linkedin" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
       </div>
-
     </div>
   </header>
 
   <main class="main">
 
-    <!-- Hero Section -->
+    <!-- Hero -->
     <section id="hero" class="hero section">
-
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-lg-6 text-center" data-aos="fade-up" data-aos-delay="100">
-            <h2><span>I'm </span><span class="underlight">Roman Cassini</span> a painter and<span> photographer from West London</span></h2>
-            <p>My work is about complexity, perspective, quality, and subjective experience. Life is a Weird Dream. Let's dream together.</p>
-            <a href="contact.html" class="btn-get-started">Commissions<br></a>
+          <div class="col-lg-8 text-center" data-aos="fade-up" data-aos-delay="100">
+            <h2><span>I'm </span><span class="underlight">Roman Cassini</span>, a painter and photographer from West London</h2>
+            <p>My work is about complexity, perspective, quality, and subjective experience. Life is a Weird Dream.</p>
+
+            <!-- Commissions → email -->
+            <a
+              class="btn btn-dark btn-commission"
+              href="mailto:ADDRESS_HERE?subject=Commission%20enquiry%20%E2%80%94%20Weird%20Dream&body=Hi%20Roman%2C%0A%0AProject%20idea%3A%0AStyle%2Freference%3A%0ASize%3A%0ATiming%3A%0ABudget%3A%0A%0AThanks%2C%0A"
+              >Commissions</a>
           </div>
         </div>
       </div>
+    </section>
 
-    </section><!-- /Hero Section -->
+    <!-- Gallery -->
+    <section id="gallery" class="gallery section">
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="masonry-grid">
 
-<!-- Gallery Section -->
-<section id="gallery" class="gallery section">
-  <div class="container" data-aos="fade-up" data-aos-delay="100">
-    <div class="masonry-grid">
+          <!-- Maggiore -->
+          <div class="masonry-item">
+            <img src="assets/img/gallery/Maggiore.jpg" alt="Lago Maggiore at Sundown" loading="lazy">
+            <a href="assets/img/gallery/Maggiore.jpg" class="glightbox preview-link" data-gallery="gallery"
+               data-title="Lago Maggiore at Sundown"
+               data-description="Acrylic on canvas board<br>16 × 12″<br>2025">
+              <i class="bi bi-arrows-angle-expand"></i>
+            </a>
+          </div>
 
-      <!-- Maggiore -->
-      <div class="masonry-item">
-        <img src="assets/img/gallery/Maggiore.jpg"
-             alt="Lago Maggiore at Sundown"
-             loading="lazy">
-        <a href="assets/img/gallery/Maggiore.jpg"
-           class="glightbox preview-link"
-           data-gallery="gallery"
-           data-title="Lago Maggiore at Sundown"
-           data-description="Acrylic on canvas board<br>16 × 12″<br>2025">
-          <i class="bi bi-arrows-angle-expand"></i>
-        </a>
+          <!-- Garda -->
+          <div class="masonry-item">
+            <img src="assets/img/gallery/Garda.jpg" alt="Clouds Rolling over Lake Garda" loading="lazy">
+            <a href="assets/img/gallery/Garda.jpg" class="glightbox preview-link" data-gallery="gallery"
+               data-title="Clouds Rolling over Lake Garda"
+               data-description="Acrylic on canvas board<br>16 × 12″<br>2025">
+              <i class="bi bi-arrows-angle-expand"></i>
+            </a>
+          </div>
+
+          <!-- Tuscany -->
+          <div class="masonry-item">
+            <img src="assets/img/gallery/Tuscany.jpg" alt="Tuscan Pine at Sunset" loading="lazy">
+            <a href="assets/img/gallery/Tuscany.jpg" class="glightbox preview-link" data-gallery="gallery"
+               data-title="Tuscan Pine at Sunset"
+               data-description="Acrylic on canvas board<br>16 × 12″<br>2025">
+              <i class="bi bi-arrows-angle-expand"></i>
+            </a>
+          </div>
+
+          <!-- Potential -->
+          <div class="masonry-item">
+            <img src="assets/img/gallery/Potential.jpg" alt="Potential" loading="lazy">
+            <a href="assets/img/gallery/Potential.jpg" class="glightbox preview-link" data-gallery="gallery"
+               data-title="Potential"
+               data-description="Pencil and ink on paper<br>24 cm × 18 cm<br>2024">
+              <i class="bi bi-arrows-angle-expand"></i>
+            </a>
+          </div>
+
+          <!-- Still Life -->
+          <div class="masonry-item">
+            <img src="assets/img/gallery/Still%20Life.jpg" alt="Still Life" loading="lazy">
+            <a href="assets/img/gallery/Still%20Life.jpg" class="glightbox preview-link" data-gallery="gallery"
+               data-title="Still Life"
+               data-description="Oil on canvas board<br>16″ × 12″<br>2024">
+              <i class="bi bi-arrows-angle-expand"></i>
+            </a>
+          </div>
+
+        </div>
       </div>
-
-      <!-- Garda -->
-      <div class="masonry-item">
-        <img src="assets/img/gallery/Garda.jpg"
-             alt="Clouds Rolling over Lake Garda"
-             loading="lazy">
-        <a href="assets/img/gallery/Garda.jpg"
-           class="glightbox preview-link"
-           data-gallery="gallery"
-           data-title="Clouds Rolling over Lake Garda"
-           data-description="Acrylic on canvas board<br>16 × 12″<br>2025">
-          <i class="bi bi-arrows-angle-expand"></i>
-        </a>
-      </div>
-
-      <!-- Tuscany -->
-      <div class="masonry-item portrait-artwork">
-        <img src="assets/img/gallery/Tuscany.jpg"
-             alt="Tuscan Pine at Sunset"
-             loading="lazy">
-        <a href="assets/img/gallery/Tuscany.jpg"
-           class="glightbox preview-link"
-           data-gallery="gallery"
-           data-title="Tuscan Pine at Sunset"
-           data-description="Acrylic on canvas board<br>16 × 12″<br>2025">
-          <i class="bi bi-arrows-angle-expand"></i>
-        </a>
-      </div>
-
-      <!-- Potential -->
-      <div class="masonry-item portrait-artwork">
-        <img src="assets/img/gallery/Potential.jpg"
-             alt="Potential"
-             loading="lazy">
-        <a href="assets/img/gallery/Potential.jpg"
-           class="glightbox preview-link"
-           data-gallery="gallery"
-           data-title="Potential"
-           data-description="Pencil and ink on paper<br>24 cm × 18 cm<br>2024">
-          <i class="bi bi-arrows-angle-expand"></i>
-        </a>
-      </div>
-
-      <!-- Still Life -->
-      <div class="masonry-item portrait-artwork">
-        <img src="assets/img/gallery/Still%20Life.jpg"
-             alt="Still Life"
-             loading="lazy">
-        <a href="assets/img/gallery/Still%20Life.jpg"
-           class="glightbox preview-link"
-           data-gallery="gallery"
-           data-title="Still Life"
-           data-description="Oil on canvas board<br>16″ × 12″<br>2024">
-          <i class="bi bi-arrows-angle-expand"></i>
-        </a>
-      </div>
-
-    </div>
-  </div>
-</section>
+    </section>
 
   </main>
 
   <footer id="footer" class="footer">
-
-    <div class="container">
-      <div class="copyright text-center ">
-        <p>© <span>Copyright</span> <strong class="px-1 sitename">Roman Cassini 2025</strong> <span>All Rights Reserved</span></p>
-      </div>
+    <div class="container text-center">
+      <p>© <strong class="sitename">Roman Cassini</strong> 2025</p>
       <div class="social-links d-flex justify-content-center">
-        <a href=""><i class="bi bi-twitter-x"></i></a>
-        <a href=""><i class="bi bi-facebook"></i></a>
-        <a href=""><i class="bi bi-instagram"></i></a>
-        <a href=""><i class="bi bi-linkedin"></i></a>
+        <a href="https://www.instagram.com/roman.cassini.art"><i class="bi bi-instagram"></i></a>
+        <a href="https://www.linkedin.com/in/roman-cassini-160499192"><i class="bi bi-linkedin"></i></a>
       </div>
     </div>
-
   </footer>
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Preloader -->
-  <div id="preloader">
-    <div class="line"></div>
-  </div>
+  <div id="preloader"><div class="line"></div></div>
 
-  <!-- Vendor JS Files -->
+  <!-- Vendor JS -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
-  <!-- Main JS File -->
+  <!-- Main JS -->
   <script src="assets/js/main.js"></script>
-
 </body>
-
 </html>
