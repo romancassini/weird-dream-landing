@@ -4,155 +4,113 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1" name="viewport">
   <title>Weird Dream — Roman Cassini</title>
-  <meta name="description" content="Paintings and photographs by Roman Cassini. Complexity, perspective, quality, and subjective experience.">
+  <meta name="description" content="Paintings and photographs by Roman Cassini.">
   <link href="assets/img/DreamLogo2.png" rel="icon">
+
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Cardo:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
-  <!-- Vendor CSS -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Only what we use -->
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
 
-  <!-- Main CSS -->
-  <link href="assets/css/main.css" rel="stylesheet">
+  <!-- Minimal styles -->
   <style>
-    /* Minimal overrides to suit single-page */
-    body.index-page .header { box-shadow: none; }
-    .logo img { height: 52px; margin-right: 10px; }
-    .hero h2 { font-weight: 700; }
-    .btn-commission { padding: .8rem 1.2rem; font-weight: 600; }
-    .masonry-grid { column-count: 3; column-gap: 1rem; }
-    .masonry-item { break-inside: avoid; margin-bottom: 1rem; position: relative; }
-    .masonry-item img { width: 100%; height: auto; display: block; border-radius: .5rem; }
-    .preview-link { position:absolute; right:.6rem; bottom:.6rem; font-size:1.2rem; color:#fff; }
-    @media (max-width: 992px){ .masonry-grid{ column-count:2; } }
-    @media (max-width: 576px){ .masonry-grid{ column-count:1; } }
-    footer .social-links a { margin: 0 .4rem; }
+    :root { --pad: 16px; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color: #111; background:#fff; }
+    a { color: inherit; text-decoration: none; }
+    .header { position: sticky; top: 0; background:#fff; border-bottom: 1px solid #eee; }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 0 var(--pad); }
+    .head-row { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .logo { display:flex; align-items:center; gap:10px; }
+    .logo img { height: 42px; }
+    .logo h1 { font-size: 20px; font-weight: 700; margin: 0; }
+    .social a { margin-left: 10px; font-size: 20px; }
+    .hero { padding: 64px 0 32px; text-align: center; }
+    .hero h2 { font-weight: 800; font-size: clamp(26px, 4vw, 40px); margin: 0 0 12px; }
+    .hero p { max-width: 720px; margin: 0 auto 16px; line-height: 1.5; }
+    .btn { display:inline-block; padding: 12px 16px; border:1px solid #111; border-radius: 8px; font-weight: 600; }
+    .gallery { padding: 24px 0 56px; }
+    .masonry { column-count: 3; column-gap: 14px; }
+    .card { break-inside: avoid; margin: 0 0 14px; }
+    .card img { width: 100%; height: auto; display:block; border-radius: 8px; }
+    .caption { font-size: 14px; color:#555; margin-top:6px; }
+    .footer { border-top:1px solid #eee; padding: 20px 0 30px; text-align:center; font-size: 14px; color:#444; }
+    .footer .social a { margin: 0 8px; font-size: 18px; }
+    @media (max-width: 992px){ .masonry{ column-count:2; } }
+    @media (max-width: 576px){ .masonry{ column-count:1; } .head-row{ height:56px; } }
   </style>
 </head>
-<body class="index-page">
+<body>
 
-  <header id="header" class="header d-flex align-items-center sticky-top">
-    <div class="container d-flex align-items-center justify-content-between">
-      <a href="/" class="logo d-flex align-items-center">
+  <header class="header">
+    <div class="wrap head-row">
+      <a href="/" class="logo">
         <img src="assets/img/DreamLogo2.png" alt="Weird Dream logo">
-        <h1 class="sitename m-0">Weird Dream</h1>
+        <h1>Weird Dream</h1>
       </a>
-
-      <!-- Social only. No nav. -->
-      <div class="header-social-links">
-        <a href="https://www.instagram.com/roman.cassini.art" class="instagram" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-        <a href="https://www.linkedin.com/in/roman-cassini-160499192" class="linkedin" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+      <div class="social">
+        <a href="https://www.instagram.com/roman.cassini.art" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+        <a href="https://www.linkedin.com/in/roman-cassini-160499192" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
       </div>
     </div>
   </header>
 
-  <main class="main">
-
-    <!-- Hero -->
-    <section id="hero" class="hero section">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-8 text-center" data-aos="fade-up" data-aos-delay="100">
-            <h2><span>I'm </span><span class="underlight">Roman Cassini</span>, a painter and photographer from West London</h2>
-            <p>My work is about complexity, perspective, quality, and subjective experience. Life is a Weird Dream.</p>
-
-            <!-- Commissions → email -->
-            <a
-              class="btn btn-dark btn-commission"
-              href="mailto:ADDRESS_HERE?subject=Commission%20enquiry%20%E2%80%94%20Weird%20Dream&body=Hi%20Roman%2C%0A%0AProject%20idea%3A%0AStyle%2Freference%3A%0ASize%3A%0ATiming%3A%0ABudget%3A%0A%0AThanks%2C%0A"
-              >Commissions</a>
-          </div>
-        </div>
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <h2>I’m <span style="text-decoration:underline">Roman Cassini</span>, a painter and photographer from West London</h2>
+        <p>My work explores complexity, perspective, quality, and subjective experience.</p>
+        <a class="btn"
+           href="mailto:ADDRESS_HERE?subject=Commission%20enquiry%20%E2%80%94%20Weird%20Dream&body=Hi%20Roman%2C%0A%0AProject%20idea%3A%0AStyle%2Freference%3A%0ASize%3A%0ATiming%3A%0ABudget%3A%0A%0AThanks%2C%0A">
+          Commissions
+        </a>
       </div>
     </section>
 
-    <!-- Gallery -->
-    <section id="gallery" class="gallery section">
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <div class="masonry-grid">
-
-          <!-- Maggiore -->
-          <div class="masonry-item">
+    <section class="gallery">
+      <div class="wrap">
+        <div class="masonry">
+          <figure class="card">
             <img src="assets/img/gallery/Maggiore.jpg" alt="Lago Maggiore at Sundown" loading="lazy">
-            <a href="assets/img/gallery/Maggiore.jpg" class="glightbox preview-link" data-gallery="gallery"
-               data-title="Lago Maggiore at Sundown"
-               data-description="Acrylic on canvas board<br>16 × 12″<br>2025">
-              <i class="bi bi-arrows-angle-expand"></i>
-            </a>
-          </div>
+            <figcaption class="caption">Lago Maggiore at Sundown · Acrylic on canvas board · 16 × 12″ · 2025</figcaption>
+          </figure>
 
-          <!-- Garda -->
-          <div class="masonry-item">
+          <figure class="card">
             <img src="assets/img/gallery/Garda.jpg" alt="Clouds Rolling over Lake Garda" loading="lazy">
-            <a href="assets/img/gallery/Garda.jpg" class="glightbox preview-link" data-gallery="gallery"
-               data-title="Clouds Rolling over Lake Garda"
-               data-description="Acrylic on canvas board<br>16 × 12″<br>2025">
-              <i class="bi bi-arrows-angle-expand"></i>
-            </a>
-          </div>
+            <figcaption class="caption">Clouds Rolling over Lake Garda · Acrylic on canvas board · 16 × 12″ · 2025</figcaption>
+          </figure>
 
-          <!-- Tuscany -->
-          <div class="masonry-item">
+          <figure class="card">
             <img src="assets/img/gallery/Tuscany.jpg" alt="Tuscan Pine at Sunset" loading="lazy">
-            <a href="assets/img/gallery/Tuscany.jpg" class="glightbox preview-link" data-gallery="gallery"
-               data-title="Tuscan Pine at Sunset"
-               data-description="Acrylic on canvas board<br>16 × 12″<br>2025">
-              <i class="bi bi-arrows-angle-expand"></i>
-            </a>
-          </div>
+            <figcaption class="caption">Tuscan Pine at Sunset · Acrylic on canvas board · 16 × 12″ · 2025</figcaption>
+          </figure>
 
-          <!-- Potential -->
-          <div class="masonry-item">
+          <figure class="card">
             <img src="assets/img/gallery/Potential.jpg" alt="Potential" loading="lazy">
-            <a href="assets/img/gallery/Potential.jpg" class="glightbox preview-link" data-gallery="gallery"
-               data-title="Potential"
-               data-description="Pencil and ink on paper<br>24 cm × 18 cm<br>2024">
-              <i class="bi bi-arrows-angle-expand"></i>
-            </a>
-          </div>
+            <figcaption class="caption">Potential · Pencil and ink on paper · 24 cm × 18 cm · 2024</figcaption>
+          </figure>
 
-          <!-- Still Life -->
-          <div class="masonry-item">
+          <figure class="card">
             <img src="assets/img/gallery/Still%20Life.jpg" alt="Still Life" loading="lazy">
-            <a href="assets/img/gallery/Still%20Life.jpg" class="glightbox preview-link" data-gallery="gallery"
-               data-title="Still Life"
-               data-description="Oil on canvas board<br>16″ × 12″<br>2024">
-              <i class="bi bi-arrows-angle-expand"></i>
-            </a>
-          </div>
-
+            <figcaption class="caption">Still Life · Oil on canvas board · 16″ × 12″ · 2024</figcaption>
+          </figure>
         </div>
       </div>
     </section>
-
   </main>
 
-  <footer id="footer" class="footer">
-    <div class="container text-center">
-      <p>© <strong class="sitename">Roman Cassini</strong> 2025</p>
-      <div class="social-links d-flex justify-content-center">
+  <footer class="footer">
+    <div class="wrap">
+      <p>© <strong>Roman Cassini</strong> 2025</p>
+      <div class="social">
         <a href="https://www.instagram.com/roman.cassini.art"><i class="bi bi-instagram"></i></a>
         <a href="https://www.linkedin.com/in/roman-cassini-160499192"><i class="bi bi-linkedin"></i></a>
       </div>
     </div>
   </footer>
 
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Preloader -->
-  <div id="preloader"><div class="line"></div></div>
-
-  <!-- Vendor JS -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-
-  <!-- Main JS -->
-  <script src="assets/js/main.js"></script>
 </body>
 </html>
